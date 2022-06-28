@@ -15,10 +15,10 @@ public class SingUPTest {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
     }
-    @AfterClass
+   /* @AfterClass
     public void finish(){
         driver.close();
-    }
+    }*/
     @Test
     public void zipCodeTestPositive() {
         driver.get("https://www.sharelane.com/cgi-bin/register.py");
@@ -104,5 +104,57 @@ public class SingUPTest {
         Assert.assertTrue(driver.findElement(By.name("first_name")).isDisplayed(),"6.2 first_name should be on the display");
         Assert.assertTrue(driver.findElements(new By.ByXPath("//*[text()='Account is created!']")).isEmpty(),"6.3 account mustn't be created");
     }
+
+    @Test
+    public void addToCartTestPositive() throws InterruptedException {
+        driver.get("https://www.sharelane.com/cgi-bin/register.py");
+        WebElement testPortal = driver.findElement(By.cssSelector("[href='../test_portal.html']"));
+        testPortal.click();
+        WebElement accountCreator = driver.findElement(By.cssSelector("[href='../cgi-bin/create_account.py']"));
+        accountCreator.click();
+        WebElement createButton = driver.findElement(By.cssSelector("[value='Create new user account']"));
+        createButton.click();
+        WebElement autoLoginButton = driver.findElement(By.cssSelector("[value='Auto Login']"));
+        autoLoginButton.click();
+        Thread.sleep(3000);
+        WebElement bookName = driver.findElement(By.cssSelector("[href^='./show_book.py?book_id=']"));
+        bookName.click();
+        WebElement addToCartButton = driver.findElement(By.cssSelector("[src='../images/add_to_cart.gif']"));
+        addToCartButton.click();
+        String actualMessage = driver.findElement(By.className("confirmation_message")).getText();
+        String expectedMessage = "Book was added to the Shopping Cart";
+        Assert.assertEquals(actualMessage, expectedMessage,"Book was added to the Shopping Cart should be on the display");
+
+    }
+
+    @Test
+    public void changeQuantityTestPositive() throws InterruptedException {
+        driver.get("https://www.sharelane.com/cgi-bin/register.py");
+        WebElement testPortal = driver.findElement(By.cssSelector("[href='../test_portal.html']"));
+        testPortal.click();
+        WebElement accountCreator = driver.findElement(By.cssSelector("[href='../cgi-bin/create_account.py']"));
+        accountCreator.click();
+        WebElement createButton = driver.findElement(By.cssSelector("[value='Create new user account']"));
+        createButton.click();
+        WebElement autoLoginButton = driver.findElement(By.cssSelector("[value='Auto Login']"));
+        autoLoginButton.click();
+        Thread.sleep(3000);
+        WebElement bookName = driver.findElement(By.cssSelector("[href^='./show_book.py?book_id=']"));
+        bookName.click();
+        WebElement addToCartButton = driver.findElement(By.cssSelector("[src='../images/add_to_cart.gif']"));
+        addToCartButton.click();
+        WebElement shoppingCart = driver.findElement(By.cssSelector("[href='./shopping_cart.py']"));
+        shoppingCart.click();
+        WebElement quantityInput = driver.findElement(By.name("q"));
+        quantityInput.clear();
+        quantityInput.sendKeys("5");
+        WebElement updateButton = driver.findElement(By.cssSelector("[value='Update']"));
+        updateButton.click();
+        String actualQuantity = driver.findElement(By.name("q")).getAttribute("value");
+        String expectedQuantity = "5";
+        Assert.assertEquals(actualQuantity, expectedQuantity,"Quantity should be 5");
+
+    }
+
 
 }
