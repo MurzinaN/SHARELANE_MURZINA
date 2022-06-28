@@ -7,9 +7,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class SingUPTest {
-
-
-
+    
     @Test
     public void zipCodeTestPositive() {
         WebDriverManager.chromedriver().setup();
