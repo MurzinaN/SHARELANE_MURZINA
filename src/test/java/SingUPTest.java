@@ -15,10 +15,10 @@ public class SingUPTest {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
     }
-   /* @AfterClass
+   @AfterClass
     public void finish(){
         driver.close();
-    }*/
+    }
     @Test
     public void zipCodeTestPositive() {
         driver.get("https://www.sharelane.com/cgi-bin/register.py");
