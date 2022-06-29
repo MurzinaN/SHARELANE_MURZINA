@@ -7,6 +7,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import java.util.concurrent.TimeUnit;
 
 public class SingUPTest {
     WebDriver driver;
@@ -14,10 +15,11 @@ public class SingUPTest {
     public void start(){
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
    @AfterClass
     public void finish(){
-        driver.close();
+        driver.quit();
     }
     @Test
     public void zipCodeTestPositive() {
@@ -106,7 +108,7 @@ public class SingUPTest {
     }
 
     @Test
-    public void addToCartTestPositive() throws InterruptedException {
+    public void addToCartTestPositive(){
         driver.get("https://www.sharelane.com/cgi-bin/register.py");
         WebElement testPortal = driver.findElement(By.cssSelector("[href='../test_portal.html']"));
         testPortal.click();
@@ -116,7 +118,6 @@ public class SingUPTest {
         createButton.click();
         WebElement autoLoginButton = driver.findElement(By.cssSelector("[value='Auto Login']"));
         autoLoginButton.click();
-        Thread.sleep(3000);
         WebElement bookName = driver.findElement(By.cssSelector("[href^='./show_book.py?book_id=']"));
         bookName.click();
         WebElement addToCartButton = driver.findElement(By.cssSelector("[src='../images/add_to_cart.gif']"));
@@ -128,7 +129,7 @@ public class SingUPTest {
     }
 
     @Test
-    public void changeQuantityTestPositive() throws InterruptedException {
+    public void changeQuantityTestPositive(){
         driver.get("https://www.sharelane.com/cgi-bin/register.py");
         WebElement testPortal = driver.findElement(By.cssSelector("[href='../test_portal.html']"));
         testPortal.click();
@@ -138,7 +139,6 @@ public class SingUPTest {
         createButton.click();
         WebElement autoLoginButton = driver.findElement(By.cssSelector("[value='Auto Login']"));
         autoLoginButton.click();
-        Thread.sleep(3000);
         WebElement bookName = driver.findElement(By.cssSelector("[href^='./show_book.py?book_id=']"));
         bookName.click();
         WebElement addToCartButton = driver.findElement(By.cssSelector("[src='../images/add_to_cart.gif']"));
